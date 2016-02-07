@@ -1,3 +1,6 @@
 # Sandbox
 Place for me to burry myself and build stuff.
-![alt tag](https://raw.github.com/lukedottec/Sandbox/branch/path/to/example1.png)
+
+Here will go anything from small ideas I want to experiment with, to coding questions I'm working on.
+
+![alt tag](https://github.com/lukedottec/Sandbox/blob/master/res/example1.png)
