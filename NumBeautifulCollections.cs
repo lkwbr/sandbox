@@ -16,11 +16,11 @@
 //	3.	x =	[3, 2, 1]
 //		i =	 1, 2, 3
 // -----------------------------------------------------
-public static int getNumBeauColls (int n)
+public static int getNumBeauColls(int n)
 {
 	return getNumBeauColls(n, Enumerable.Range(1, n).ToList());
 }
-public static int getNumBeauColls (int i, List<int> unused)
+public static int getNumBeauColls(int i, List<int> unused)
 {
 	// Terminating condition; means we've gone from index n to 1,
 	// so we've found a beautiful collection :)
@@ -30,11 +30,13 @@ public static int getNumBeauColls (int i, List<int> unused)
 	int numBeauColls = 0;
 	foreach (var y in unused) 
 	{
-		if (isBeauPair(y, i)) {
+		if (isBeauPair(y, i)) 
+		{
 			// Go down a level to create another
 			// branch of possible collections where
 			// the i-th number in it is y
-			numBeauColls += getNumBeauColls(
+			numBeauColls += getNumBeauColls
+			(
 				(i - 1), 
 				// LINQ to create new "unused" list
 				// without value of y in there
@@ -47,7 +49,6 @@ public static int getNumBeauColls (int i, List<int> unused)
 // See if given data and index are good match for collection
 public static bool isBeauPair(int x, int i)
 {
-	if (x % i == 0 ||
-		i % x == 0) return true;
+	if (x % i == 0 || i % x == 0) return true;
 	return false;
 }
