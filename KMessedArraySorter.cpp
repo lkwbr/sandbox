@@ -1,5 +1,11 @@
-// K-Messed Array Sort
-// by Luke Weber
+// K-Messed Array Sorter
+// ---
+// Problem: Given an (originally) sorted array, each item is then displaced at most k
+// spots, and at least 0 spots
+// Solution: Use min-heap sort on a "sliding window" of k items to achieve O(n*log(k)),
+// with a space complexity of O(k+1) --> O(1)
+// ---
+// Code written by Luke Weber
 
 #include <stdlib.h>
 #include <math.h>
