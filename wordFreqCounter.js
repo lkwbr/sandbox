@@ -4,35 +4,21 @@
 // 01/24/2017
 // Improved from scan_1 to scan_2
 
+"use strict";
+
 
 /* scan_2 */
 
-/**
- *  Return unique words and the number of their occurences
- *  @param {String} doc - Linear combination of space-seperated words
- *  @returns {Array} Unique words paired with their frequency
- */ 
-function scan_2(doc) {
-
-  // Capture word frequencies
-  let dict = {};
-  doc.split(" ").forEach(function(word) {
-    dict[word] = (dict[word] || 0) + 1; 
-  });
-
-  // Dictionary to array; used for sorting!
-  let dictArr = Object.keys(dict).map(k => [k, dict[k]);
-
-  // Heap sort
-  let heap = new MaxHeap();
-  heap.sort(dictArr);
-
-  return dictArr;
-}
-
 class MaxHeap {
-  constructor() { 
-    this.d = 2;
+  constructor(valFunction, d) { 
+    this.d;
+    this.valFunction;
+
+    // Argument checking
+    let numArgs = arguments.length;
+    if (numArgs < 2) { this.d = 2; }
+    if (numArgs < 1) { this.valFunction = valFunction; }
+    else { this.valFunction = item => { return item; } }
   }
 
   iParent(i) { return Math.floor((i - 1) / this.d); }
@@ -58,16 +44,17 @@ class MaxHeap {
       let child = this.iChild(root, 0);
       let swap = root;
 
-      if (arr[swap] < arr[child]) {
+      if (this.valFunction(arr[swap]) < this.valFunction(arr[child])) {
         swap = child;
       } 
-      if (((child + 1) <= end) && (arr[swap] < arr[child + 1])) {
+      if (((child + 1) <= end) 
+        && (this.valFunction(arr[swap]) < this.valFunction(arr[child + 1]))) {
         swap = child + 1;
       }
-      if (swap = root) {
+      if (swap == root) {
         return;
       } else {
-        swap(root, swap);
+        this.swap(arr, root, swap);
         root = swap;
       }
     }
@@ -75,17 +62,25 @@ class MaxHeap {
 
   // Heapsort on given array
   sort(arr, count) {
-    // Initial call from outside
     if (arguments.length === 1) { count = arr.length; } 
+
+    this.ify(arr, count);
 
     let end = count - 1;
     while (end > 0) {
+
+      console.log("top = " + arr[0]);
+
       // Move max to front of sorted elements
-      swap(end, 0);
+      this.swap(arr, end, 0);
       // Heap size reduced
       end--;
       // Restore heap
-      siftDown(arr, 0, end);
+      this.siftDown(arr, 0, end);
+
+      console.log("end = " + end);
+      console.log(arr);
+      console.log();
     }
   }
 
@@ -95,6 +90,34 @@ class MaxHeap {
     arr[b] = c;
   } 
 }
+
+/**
+ *  Return unique words and the number of their occurences
+ *  @param {String} doc - Linear combination of space-seperated words
+ *  @returns {Array} Unique words paired with their frequency
+ */ 
+function scan_2(doc) {
+
+  // Capture word frequencies
+  let dict = {};
+  doc.split(" ").forEach(function(word) {
+    dict[word] = (dict[word] || 0) + 1; 
+  });
+
+  // Dictionary to array; used for sorting!
+  let dictArr = Object.keys(dict).map(k => [k, dict[k]]);
+
+  // Heap sort
+  let heap = new MaxHeap(item => {
+    // Use frequency to sort
+    return item[1]; 
+  });
+  heap.sort(dictArr);
+
+  return dictArr;
+}
+
+var freqs = scan_2("a b a c b d a");
 
 
 /* scan_1 */
